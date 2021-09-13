@@ -6,6 +6,8 @@ services:
       context: .
     environment:
       - LOG_LEVEL
+    env_file:
+      - .env
     volumes:
       - $PWD:/app:ro,delegated # fix rspec slowness due to size of vendor dir
     working_dir: /app

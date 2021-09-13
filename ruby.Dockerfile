@@ -1,4 +1,6 @@
-FROM ruby:2.7-alpine
+FROM ruby:2.7-buster
 MAINTAINER Carlos Nunez <dev@carlosnunez.me>
 
-RUN apk add --no-cache bash git curl ncurses
+COPY Gemfile /
+RUN apt -y install git curl
+RUN bundle install

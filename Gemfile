@@ -1,3 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'trello'
+gem 'pry'
+gem 'ruby-trello'
+gem 'sourcify'
+gem 'thread'
