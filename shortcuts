@@ -1,1 +1,1 @@
-alias trelloctl="docker-compose run --rm --service-ports trelloctl"
+alias trelloctl="docker-compose run -T --rm --service-ports trelloctl"

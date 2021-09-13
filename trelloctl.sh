@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 usage() {
-  _gather_commands() {
-    commands=""
+  _gather_commands() { commands=""
     for file in *.rb
     do
       command="$(sed 's/.rb$//' <<< "$file")"
@@ -48,4 +47,4 @@ then
   log_error "Couldn't find file: $file_for_action. Did you write it yet?"
   exit 1
 fi
-ruby "$file_for_action" "${@:2}"
+ruby -I/app/lib "$file_for_action" "${@:2}"
