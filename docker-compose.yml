@@ -1,0 +1,14 @@
+version: '2.2'
+services:
+  ruby:
+    build:
+      dockerfile: ruby.Dockerfile
+      context: .
+    environment:
+      - LOG_LEVEL
+    volumes:
+      - $PWD:/app:ro,delegated # fix rspec slowness due to size of vendor dir
+    working_dir: /app
+  trelloctl:
+    extends: ruby
+    entrypoint: ./trelloctl.sh
