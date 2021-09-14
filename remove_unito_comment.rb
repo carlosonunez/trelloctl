@@ -10,6 +10,7 @@ require 'trelloctl'
 
 TRIGGER_PHRASE_LITERAL = '┆Card is synchronized with this'
 TRIGGER_PHRASE_REGEXP = /┆Card is synchro.*by \[Unito\].*$/
+PROGRAM_BANNER = "#{$PROGRAM_NAME}: Removes the Unito comment from card descriptions"
 
 def collect_target_cards_from_boards(user, boards)
   board_pool = Thread.pool(5)
@@ -54,7 +55,12 @@ def update_descriptions(user, card_refs)
 end
 
 ARGV << '-h' if ARGV.empty?
-options = OptionParsing.gather_options(ARGV)
+option_config = OptionConfig.new(PROGRAM_BANNER)
+option_config.add_option(long_flag: '--boards',
+                         description: 'The boards from which cards will be modified',
+                         type: Array,
+                         id: :boards)
+options = OptionParsing.gather_options(args: ARGV, config: option_config)
 
 if options.key?(:usage)
   puts options[:usage]

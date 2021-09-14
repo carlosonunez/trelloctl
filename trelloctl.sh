@@ -41,6 +41,13 @@ then
 fi
 
 action="$1"
+if test -z "$action"
+then
+  usage
+  log_error "Please provide an action."
+  exit 1
+fi
+
 file_for_action="$PWD/$1.rb"
 if ! test -f "$file_for_action"
 then
