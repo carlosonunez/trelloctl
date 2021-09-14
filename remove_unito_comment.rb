@@ -55,20 +55,20 @@ def update_descriptions(user, card_refs)
 end
 
 ARGV << '-h' if ARGV.empty?
-option_config = OptionConfig.new(PROGRAM_BANNER)
-option_config.add_option(long_flag: '--boards',
-                         description: 'The boards from which cards will be modified',
-                         type: Array,
-                         id: :boards)
-options = OptionParsing.gather_options(args: ARGV, config: option_config)
+options = Options.new(PROGRAM_BANNER)
+options.add_option(long_flag: '--boards',
+                   description: 'The boards from which cards will be modified',
+                   type: Array,
+                   id: :boards,
+                   required: true)
+options.gather!(ARGV)
+options.exit_if_usage_set!
+options.exit_if_missing_required_vars!
 
-if options.key?(:usage)
-  puts options[:usage]
-  exit
-end
-raise '--boards cannot be empty' if options[:boards].nil? || options[:boards].empty?
+boards = options.value(:boards)
+raise '--boards cannot be empty' if boards.nil? || boards.empty?
 
-puts "---> Collecting cards from #{options[:boards]}. This might take a few minutes."
-target_cards = collect_target_cards_from_boards(TrelloUser.instance, options[:boards])
+puts "---> Collecting cards from #{boards}. This might take a few minutes."
+target_cards = collect_target_cards_from_boards(TrelloUser.instance, boards)
 puts "---> Removing /#{TRIGGER_PHRASE_REGEXP}/ from #{target_cards.length} cards. This might also take a few minutes."
 update_descriptions(TrelloUser.instance, target_cards)

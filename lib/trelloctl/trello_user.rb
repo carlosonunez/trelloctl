@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'trello'
 require 'logger'
 require 'singleton'
@@ -13,6 +15,8 @@ class TrelloUser
     @logger.level = ENV['LOG_LEVEL'] || Logger::WARN
     @logger.debug("Searching for Trello ID #{ENV['TRELLO_USER_ID']}; please standby")
     @user = Trello::Member.find(ENV['TRELLO_USER_ID'])
+
+    raise "No user found matching #{@user} with supplied credentials" if @user.nil?
   end
 
   def configure_trello!
