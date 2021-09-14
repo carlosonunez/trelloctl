@@ -46,5 +46,8 @@ user.filter_boards(boards).each do |board_ref|
 end
 boards_pool.shutdown
 json = labels.to_json
-puts YAML.safe_load(json).to_yaml unless options.value(:format) == 'json'
-puts labels.to_json unless options.value(:format) == 'yaml'
+if options.value(:format) == 'yaml'
+  puts YAML.safe_load(json).to_yaml
+else
+  puts json
+end
