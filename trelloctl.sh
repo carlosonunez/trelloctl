@@ -11,9 +11,9 @@ usage() {
       then
         action="No description specified?"
       fi
-      commands="$commands$(printf "%s %s %s\n" "$command" "${separator:${#action}}" "$action")"
+      commands="$commands\n$(printf "%s %s %s" "$command" "${separator:${#action}}" "$action")"
     done
-    echo "$commands"
+    echo -ne "$commands"
   }
   cat <<-USAGE
 $0 [command] [-h|--help]
